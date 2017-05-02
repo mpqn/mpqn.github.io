@@ -1,0 +1,820 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="xUtils," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="xUtils 是一款常见的聚合型框架，聚合型的框架缺点在于耦合高，难扩展，越是大而全，越容易牵一发而动全身。然而它的优点也是显而易见的，而且作者也一直在维护，就目前来说还有使用空间。">
+<meta name="keywords" content="xUtils">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xUtils3的基本使用">
+<meta property="og:url" content="https://mpqn.github.io/2016/12/01/xUtils3/index.html">
+<meta property="og:site_name" content="沒譜青年">
+<meta property="og:description" content="xUtils 是一款常见的聚合型框架，聚合型的框架缺点在于耦合高，难扩展，越是大而全，越容易牵一发而动全身。然而它的优点也是显而易见的，而且作者也一直在维护，就目前来说还有使用空间。">
+<meta property="og:updated_time" content="2017-03-10T06:57:37.553Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xUtils3的基本使用">
+<meta name="twitter:description" content="xUtils 是一款常见的聚合型框架，聚合型的框架缺点在于耦合高，难扩展，越是大而全，越容易牵一发而动全身。然而它的优点也是显而易见的，而且作者也一直在维护，就目前来说还有使用空间。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://mpqn.github.io/2016/12/01/xUtils3/"/>
+
+
+
+
+
+  <title> xUtils3的基本使用 | 沒譜青年 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d1e5fa2baa7275c736384e30e1e83b7b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">沒譜青年</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">用心寫好每一個BUG!</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://mpqn.github.io/2016/12/01/xUtils3/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="沒譜青年">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/header.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="沒譜青年">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="沒譜青年" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                xUtils3的基本使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-01T13:23:46+08:00">
+                2016-12-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/01/xUtils3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/01/xUtils3/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote class="blockquote-center"><p>xUtils 是一款常见的聚合型框架，聚合型的框架缺点在于耦合高，难扩展，越是大而全，越容易牵一发而动全身。然而它的优点也是显而易见的，而且作者也一直在维护，就目前来说还有使用空间。</p>
+</blockquote>  
+<a id="more"></a>
+<h2 id="xUtils中拥有四大模块"><a href="#xUtils中拥有四大模块" class="headerlink" title="xUtils中拥有四大模块"></a>xUtils中拥有四大模块</h2><ul>
+<li>View   </li>
+<li>Http  </li>
+<li>ImageLoader  </li>
+<li>DataBase  </li>
+</ul>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><pre><code>1.添加依赖，通过open module settings进行依赖添加  
+2.声明权限，需要网络请求添加internet权限，需要读取文件，缓存文件，添加sd卡写权限  
+3.初始化：首先自定义Application，定义之后去Manifest文件中的application标签下的name属性上进行注册。注册之后重写我们Application的onCreate方法，在onCreate中进行框架的初始化。  
+x.Ext.init(Application);
+</code></pre><h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><h4 id="1-在Activity中使用："><a href="#1-在Activity中使用：" class="headerlink" title="1.在Activity中使用："></a>1.在Activity中使用：</h4><pre><code>① 在onCreate中进行反转注入 x.view().inject(Activity)
+② 设置布局使用 @ContentView（layoutResId） 使用位置在我们的Activity类上面
+③ 声明View使用 @ViewInject(R.id.xxx) 使用位置在我们的类中，成员变量。
+④ 事件注入使用 @Event(value = R.id.xxx,type= xxxListener.class)
+    value 支持数组 
+
+！！！ Action：事件注入方法必须私有
+              参数列表必须与指定type对应的监听器中的函数的参数列表保持一致
+              方法名最好以onEvent或Click结尾
+              有返回值的监听，要返回对应的返回值。
+</code></pre><h4 id="2-在Adapter中使用："><a href="#2-在Adapter中使用：" class="headerlink" title="2.在Adapter中使用："></a>2.在Adapter中使用：</h4><pre><code>① 在ViewHolder中对声明的View使用 @ViewInject 进行注入
+② 在getView方法的实例化holder之后调用 x.view().inject(holder,converView)
+</code></pre><h4 id="3-在Fragment中进行使用："><a href="#3-在Fragment中进行使用：" class="headerlink" title="3.在Fragment中进行使用："></a>3.在Fragment中进行使用：</h4><pre><code>① 在onCreateView中使用 x.view().inject(Fragment,LayoutInflater,container)注入
+② 在onViewCreated判断在onCreateView中是否注入了，如果注入不做任何操作，如果没有注入，那我们就注入一下 x.view().inject(fragment,view)
+③ 布局注入，和Activity一样，在类上面使用@ContentView（layoutResId）
+   view注入和Activity一样, 在Fragment中使用@ViewInject(R.id.xxx) 成员变量
+   事件注入和Activity一样，@Event(value=R.id.xxx,type= xxxListener.class)
+</code></pre><p>Http</p>
+<h4 id="1-简单使用"><a href="#1-简单使用" class="headerlink" title="1.简单使用"></a>1.简单使用</h4><pre><code>① 先获取一个RequestParams对象，直接RequestParams params = new RequestParams（url）
+    如果有参数，可以调用params.addBodyParamter(key,value) key是String，value支持Sting，File，InputStream，byte[]
+    也可以调用params.addQueryStringParameter（key，value） key是String,value也是String
+② 如果是一个简单的使用，如果是get直接调用 x.http().get(parmas,new CallBack.CommenCallBack&lt;String&gt;{})
+③ 如果是post直接调用x.http().post(parmas,new CallBack.CommenCallBack&lt;String&gt;{})
+④ 我们的CallBack有四个回调函数：onSuccess,onCanceled,onError，onFinished。
+    无论哪种情况都会调用onFinished，如果我们请求成功会调用onSuccess，如果我们请求失败，或是发生错误
+    会回调onError，如果我们的请求被取消，会回调onCanceled
+</code></pre><h4 id="2-带取消的使用"><a href="#2-带取消的使用" class="headerlink" title="2.带取消的使用"></a>2.带取消的使用</h4><pre><code>基本使用和简单使用并无区别，唯一需要注意的是将我们x.http.get()或x.http().post()对应的对象获取过来
+使用Callback.Cancelable获取过来，当我们想取消网络请求的时候，调用cancel方法。
+</code></pre><h4 id="3-自定义网络请求"><a href="#3-自定义网络请求" class="headerlink" title="3.自定义网络请求"></a>3.自定义网络请求</h4><pre><code>① 新创建一个类，继承自RequestParams，使用@HttpRequest注解修饰我们的类，指定host= &quot;服务器地址&quot;
+    path=&quot;路径（服务器中的相对路径）&quot;
+② 使用的时候依然直接new 出来，调用x.http().get() or x.http().post()
+③ 如果我们的请求拥有参数，可以使用 &apos;简单使用&apos; 的添加参数的方法。也可以使用在自定义类中直接持有请求的字段（参数），在我们实例化之后，直接给对象赋值
+④ 创建一个类，实现ResponseParse，里面有两个方法checkResponse()，parse()。我们一般会在check对内容进行一个简单的过滤。一般在parse中进行解析操作，默认支持json，xml解析，其余定制解析需要研究源码。
+⑤ 为我们的返回值创建模型类，在类上使用@HttpResponse注解，注解 parse = 自定义parse.class
+⑥ 使用的时候，使用的时候将CallBack.CommenCallBack&lt;T&gt; 中的泛型T指定为我们添加注解的模型类。
+</code></pre><h3 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h3><pre><code>使用起来比较简单：
+    x.image().bind(iamgeView,url)
+但是我们很多时候需要自定义配置，ImageOptions
+    x.image().bind(imageView,url,imageOptions)
+
+简单介绍一下imageOptions
+    ImageOptions options = new ImageOptions.Builder()
+                                // 设置图片渐变
+                                .setFadeIn(true)
+                                // 设置使用缓存
+                                .setUseMemCache(true)
+                                // 设置加载过程图片
+                                .setLoadingDrawableId(R.mipmap.ic_launcher)
+                                // 设置加载失败的图片
+                                .setFailureDrawableId(R.mipmap.ic_launcher)
+                                // 设置圆形
+                                //.setCircular(true)
+                                // 设置圆角 TODO: 圆角最好和方形属性配合使用
+                                .setRadius(DensityUtil.px2dip(20))
+                                // 设置方形
+                                .setSquare(true)
+                                // 设置动画
+                                .setAnimation(AnimationUtils.loadAnimation(context,R.anim.image_in))
+                                .build;
+</code></pre><h3 id="DataBase"><a href="#DataBase" class="headerlink" title="DataBase"></a>DataBase</h3><p>基本使用</p>
+<pre><code>① 首先我们需要获取一个DbManager，DbManager dbManager = x.getDb(DaoConfig),实例化的时候需要一个DaoConfig的参数。
+② 实例化一个DaoConfig，直接new DaoConfig,DaoConfig可以配置数据库的名字，版本，存储位置，是否支持事物，还有打开监听，升级监听，创建监听
+③ 当拥有DbManager对象之后，我们可以使用DbManager进行数据的增删改查。
+
+注意：
+① 我们操作的对象需要添加注解在model上，使用@Table（name = &quot;表名&quot;）
+② 在我们需要存到数据库中的字段上面添加@Colunms（name = &quot;字段名&quot;，isId = boolean，autoGen =  boolean），通常我们只使用name，如果是id的或者将一个唯一的属性作为id的，需要将isId设置为true，想要id为自己设置的数值，需要将autoGen设置为false，为true的时候自动生成，自增。
+</code></pre><p>1.存储数据：</p>
+<pre><code>DbManager.save(Object)
+</code></pre><p>2.查询数据</p>
+<pre><code>DbManager.selector(Class&lt;?&gt;)  获取指定表中的数据
+        .where(WhereBuilder) 获取条件
+        .or(WhereBuilder) 满足其中一个条件即可
+        .and(WhereBuilder) 同时满足的条件
+        .orderBy(&quot;columns&quot;,boolean) 根据某一字段进行排序，boolean为false或者不填为升序，反之降序
+        .limit（number） 限制获取条数，如果满足条件的超过我们的限制，只获取我们限制的条数，如果满足条件的没有达到限制条数，则为实际条数
+        .findAll()将所有符合前面限制条件的对象获取出来
+</code></pre><p>3.更新数据</p>
+<pre><code>DbManager.update(Class&lt;?&gt;,WhereBuilder,KeyValue)
+① 更新的对象对应的Class，实际对应的是数据库中的表
+② 更新条件
+③ 更新的字段，key-value形势，key-数据库中的字段，value-我们替换的内容
+</code></pre><p>4.删除数据</p>
+<pre><code> DbManager.delete(Class&lt;?&gt;,WhereBuilder)
+① 删除对象对应的Class，实际对应的是数据库中的表
+② 删除条件 
+</code></pre><p>5.核心</p>
+<pre><code>WhereBuilder
+① 实例化 WhereBuilder.b(param1,param2,param3)
+② param1 字段，对应表中的字段
+③ param2 操作符, &quot; &lt; &gt; = like....&quot;
+④ param3 值value，我们字段对应的值
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/xUtils/" rel="tag"># xUtils</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/23/Progit-learn-note/" rel="next" title="Progit 学习笔记">
+                <i class="fa fa-chevron-left"></i> Progit 学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/01/xUtils3/"
+           data-title="xUtils3的基本使用" data-url="https://mpqn.github.io/2016/12/01/xUtils3/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="沒譜青年" />
+          <p class="site-author-name" itemprop="name">沒譜青年</p>
+          <p class="site-description motion-element" itemprop="description">洛陽親友如相問，就説我在寫BUG！</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#xUtils中拥有四大模块"><span class="nav-number">1.</span> <span class="nav-text">xUtils中拥有四大模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法"><span class="nav-number">1.1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#View"><span class="nav-number">1.2.</span> <span class="nav-text">View</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-在Activity中使用："><span class="nav-number">1.2.1.</span> <span class="nav-text">1.在Activity中使用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-在Adapter中使用："><span class="nav-number">1.2.2.</span> <span class="nav-text">2.在Adapter中使用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-在Fragment中进行使用："><span class="nav-number">1.2.3.</span> <span class="nav-text">3.在Fragment中进行使用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简单使用"><span class="nav-number">1.2.4.</span> <span class="nav-text">1.简单使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-带取消的使用"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.带取消的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-自定义网络请求"><span class="nav-number">1.2.6.</span> <span class="nav-text">3.自定义网络请求</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Image"><span class="nav-number">1.3.</span> <span class="nav-text">Image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataBase"><span class="nav-number">1.4.</span> <span class="nav-text">DataBase</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">沒譜青年</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mpqn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

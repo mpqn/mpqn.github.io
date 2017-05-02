@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="git," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Git应该是一个程序员必备的技能了吧？刚接触git的时候是看一片文章介绍git的原理，弄得一头雾水，初学确实需要一个过程，刚开始接触git推荐阅读官方的Progit一书，这篇是在阅读时做的笔记，相对比较基础。">
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Progit 学习笔记">
+<meta property="og:url" content="https://mpqn.github.io/2016/12/23/Progit-learn-note/index.html">
+<meta property="og:site_name" content="沒譜青年">
+<meta property="og:description" content="Git应该是一个程序员必备的技能了吧？刚接触git的时候是看一片文章介绍git的原理，弄得一头雾水，初学确实需要一个过程，刚开始接触git推荐阅读官方的Progit一书，这篇是在阅读时做的笔记，相对比较基础。">
+<meta property="og:updated_time" content="2017-02-23T08:10:24.251Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Progit 学习笔记">
+<meta name="twitter:description" content="Git应该是一个程序员必备的技能了吧？刚接触git的时候是看一片文章介绍git的原理，弄得一头雾水，初学确实需要一个过程，刚开始接触git推荐阅读官方的Progit一书，这篇是在阅读时做的笔记，相对比较基础。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://mpqn.github.io/2016/12/23/Progit-learn-note/"/>
+
+
+
+
+
+  <title> Progit 学习笔记 | 沒譜青年 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d1e5fa2baa7275c736384e30e1e83b7b";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">沒譜青年</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">用心寫好每一個BUG!</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://mpqn.github.io/2016/12/23/Progit-learn-note/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="沒譜青年">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/header.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="沒譜青年">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="沒譜青年" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Progit 学习笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-23T14:03:27+08:00">
+                2016-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/23/Progit-learn-note/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/23/Progit-learn-note/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote class="blockquote-center"><p>Git应该是一个程序员必备的技能了吧？刚接触git的时候是看一片文章介绍git的原理，弄得一头雾水，初学确实需要一个过程，刚开始接触git推荐阅读官方的Progit一书，这篇是在阅读时做的笔记，相对比较基础。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="在现有目录中初始化仓库"><a href="#在现有目录中初始化仓库" class="headerlink" title="在现有目录中初始化仓库"></a>在现有目录中初始化仓库</h2><p>获取 Git 仓库<br>有两种取得 Git 项目仓库的方法。 第一种是在现有项目或目录下导入所有文件到 Git 中； 第二种是从一个服务器克隆一个现有的 Git 仓库。<br>如果你打算使用 Git 来对现有的项目进行管理，你只需要进入该项目目录并输入：  </p>
+<pre><code>$ git init  
+</code></pre><p>克隆仓库的命令格式是 git clone [url] 。 比如，要克隆 Git 的可链接库 libgit2，可以用下面的命令：</p>
+<pre><code>$ git clone https://github.com/libgit2/libgit2
+</code></pre><p>如果你想在克隆远程仓库的时候，自定义本地仓库的名字，你可以使用<br>如下命令：</p>
+<pre><code>$ git clone https://github.com/libgit2/libgit2 mylibgit
+</code></pre><p>这将执行与上一个命令相同的操作，不过在本地创建的仓库名字变为 mylibgit<br><code>Git 支持多种数据传输协议。 上面的例子使用的是 https:// 协议，不过你也可以使用
+git:// 协议或者使用 SSH 传输协议，比如 user@server:path/to/repo.git</code></p>
+<h2 id="记录每次更新到仓库"><a href="#记录每次更新到仓库" class="headerlink" title="记录每次更新到仓库"></a>记录每次更新到仓库</h2><blockquote>
+<ul>
+<li>请记住，你工作目录下的每一个文件都不外乎这两种状态：<strong><code>已跟踪</code>或<code>未跟踪</code></strong>。 已跟踪的文件是指那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后，它们的状态可能处于<code>未修改</code>，<code>已修改</code>或已放入<code>暂存区</code>。   </li>
+<li><strong>工作目录中除<code>已跟踪文件</code>以外的所有其它文件都属于<code>未跟踪文件</code>，它们既不存在于上次快照的记录中，也没有放入暂存区。</strong> 初次克隆某个仓库的时候，工作目录中的所有文件都属于已跟踪文件，并处于未修改状态。编辑过某些文件之后，由于自上次提交后你对它们做了修改，Git 将它们标记为已修改文件。我们逐步将这些修改过的文件放入暂存区，然后提交所有暂存了的修改，如此反复。 </li>
+</ul>
+</blockquote>
+<h2 id="检查当前文件状态"><a href="#检查当前文件状态" class="headerlink" title="检查当前文件状态"></a>检查当前文件状态</h2><p>要查看哪些文件处于什么状态，可以用 git status 命令。 如果在克隆仓库后立即使用此命<br>令，会看到类似这样的输出：</p>
+<pre><code>$ git status
+On branch master
+nothing to commit, working directory clean
+</code></pre><p>现在，让我们在项目下创建一个新的 README 文件。 如果之前并不存在这个文件，使用<br>git status 命令，你将看到一个新的未跟踪文件：</p>
+<pre><code>$ echo &apos;My Project&apos; &gt; README
+$ git status
+On branch master
+Untracked files:
+(use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+README
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+</code></pre><p>在状态报告中可以看到新建的 README 文件出现在 Untracked files 下面。 未跟踪的文件意味着 Git 在之前的快照（提交）中没有这些文件；Git 不会自动将之纳入跟踪范围，除非你明明白白地告诉它“我需要跟踪该文件”， 这样的处理让你不必担心将生成的二进制文件或其它不想被跟踪的文件包含进来。 不过现在的例子中，我们确实想要跟踪管理 README 这个文件。  </p>
+<h3 id="跟踪新文件"><a href="#跟踪新文件" class="headerlink" title="跟踪新文件"></a>跟踪新文件</h3><p>使用命令 git add 开始跟踪一个文件。 所以，要跟踪 README 文件，运行：</p>
+<pre><code>$ git add README
+</code></pre><p>此时再运行 git status 命令，会看到 README 文件已被跟踪，并处于暂存状态：</p>
+<pre><code>$ git status
+On branch master
+Changes to be committed:
+(use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+new file: README
+</code></pre><p>只要在 Changes to be committed 这行下面的，就说明是已暂存状态。 如果此时提交，那么该文件此时此刻的版本将被留存在历史记录中。 你可能会想起之前我们使用 git init 后就运行了 git add (files) 命令，开始跟踪当前目录下的文件。 git add 命令使用文件或目录的路径作为参数；如果参数是目录的路径，该命令将递归地跟踪该目录下的所有文件。</p>
+<h3 id="暂存已修改文件"><a href="#暂存已修改文件" class="headerlink" title="暂存已修改文件"></a>暂存已修改文件</h3><p>假设修改了 README.md，<strong>文件 README.md 出现在 Changes not staged for commit 这行下面，说明已跟踪文件的内容发生了变化，但还没有放到暂存区。</strong> 要暂存这次更新，需要运行 <strong>git add 命令。 这是个多功能命令：可以用它开始跟踪新文件，或者把已跟踪的文件放到暂存区，还能用于合并时把有冲突的文件标记为已解决状态等</strong>。 将这个命令理解为<strong>“添加内容到下一次提交中”</strong>而不是“将一个文件添加到项目中”要更加合适。 </p>
+<h2 id="gitignore-的格式规范如下："><a href="#gitignore-的格式规范如下：" class="headerlink" title=".gitignore 的格式规范如下："></a>.gitignore 的格式规范如下：</h2><ul>
+<li>所有空行或者以 ＃ 开头的行都会被 Git 忽略。</li>
+<li>可以使用标准的 glob 模式匹配。</li>
+<li>匹配模式可以以（ / ）开头防止递归。</li>
+<li>匹配模式可以以（ / ）结尾指定目录。</li>
+<li>要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（ ! ）取反。 </li>
+</ul>
+<p>所谓的 glob 模式是指 shell 所使用的简化了的正则表达式。 星号（ ）匹配零个或多个任意字符； [abc] 匹配任何一个列在方括号中的字符（这个例子要么匹配一个 a，要么匹配一个b，要么匹配一个 c）；问号（ ? ）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符，表示所有在这两个字符范围内的都可以匹配（比如 [0-9] 表示匹配所有 0 到 9 的数字）。 使用两个星号（ ) 表示匹配任意中间目录，比如 a/**/z 可以匹配 a/z , a/b/z 或a/b/c/z 等。</p>
+<h3 id="看一个-gitignore-文件的例子："><a href="#看一个-gitignore-文件的例子：" class="headerlink" title="看一个 .gitignore 文件的例子："></a>看一个 .gitignore 文件的例子：</h3><pre><code># no .a files
+    *.a  
+# but do track lib.a, even though you&apos;re ignoring .a files above    
+    !lib.a  
+# only ignore the TODO file in the current directory, not subdir/TODO  
+    /TODO  
+# ignore all files in the build/ directory  
+    build/  
+# ignore doc/notes.txt, but not doc/server/arch.txt  
+    doc/*.txt  
+# ignore all .pdf files in the doc/ directory  
+    doc/**/*.pdf
+</code></pre><p>若要查看已暂存的将要添加到下次提交里的内容，可以用 git diff –cached 命令。（Git1.6.1 及更高版本还允许使用 git diff –staged ，效果是相同的，但更好记些。）<br>请注意，git diff 本身只显示尚未暂存的改动，而不是自上次提交以来所做的所有改动。 所以有时候你一下子暂存了所有更新过的文件后，运行 git diff 后却什么也没有，就是这个原因。</p>
+<h3 id="Git-Diff-的插件版本"><a href="#Git-Diff-的插件版本" class="headerlink" title="Git Diff 的插件版本"></a>Git Diff 的插件版本</h3><p>如果你喜欢通过图形化的方式或其它格式输出方式的话，可以使用 git difftool 命令来用 Araxis ，emerge 或 vimdiff 等软件输出 diff 分析结果。 使用 git difftool –tool-help命令来看你的系统支持哪些 Git Diff 插件。 </p>
+<h3 id="移除文件"><a href="#移除文件" class="headerlink" title="移除文件"></a>移除文件</h3><pre><code>git rm - &lt;filename&gt;
+</code></pre><p>如果删除之前修改过并且已经放到暂存区域的话，则必须要用强制删除选项 -f （译注：即 force 的首字母）。 这是一种安全特性，用于防止误删还没有添加到快照的数据，这样的数据不能被 Git 恢复。</p>
+<p>另外一种情况是，我们想把文件从 Git 仓库中删除（亦即从暂存区域移除），但仍然希望保留在当前工作目录中。 换句话说，你想让文件保留在磁盘，但是并不想让 Git 继续跟踪。 当你忘记添加 .gitignore 文件，不小心把一个很大的日志文件或一堆 .a 这样的编译生成文件添加到暂存区时，这一做法尤其有用。 为达到这一目的，使用 –cached 选项：</p>
+<pre><code>$ git rm --cached README
+</code></pre><p>git rm 命令后面可以列出文件或者目录的名字，也可以使用 glob 模式。 比方说：</p>
+<pre><code>$ git rm log/\*.log
+</code></pre><p>注意到星号 * 之前的反斜杠 \ ， 因为 Git 有它自己的文件模式扩展匹配方式，所以我们不用 shell 来帮忙展开。 此命令删除 log/ 目录下扩展名为 .log 的所有文件。 类似的比如：</p>
+<pre><code>$ git rm \*~
+</code></pre><p>该命令为删除以 ~ 结尾的所有文件。</p>
+<h3 id="移动文件"><a href="#移动文件" class="headerlink" title="移动文件"></a>移动文件</h3><p>要在 Git 中对文件改名，可以这么做：</p>
+<pre><code>$ git mv file_from file_to
+</code></pre><h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ol>
+<li><p>LF will be replaced by CRLF LF 位unix下换行符 CRLF位windows下换行符 解决方法：</p>
+<pre><code>$ git config core.autocrlf false
+</code></pre></li>
+<li><p>windows下创建.gitignore文件</p>
+<pre><code>$ touch .gitignore
+</code></pre></li>
+<li><p>Git diff ^M : 这是由于换行符在不同的操作系统上定义的区别造成的</p>
+<pre><code>$ git config --global core.whitespace cr-at-eol
+</code></pre></li>
+<li><p>出现&gt; 符号 表示没有输入完 </p>
+<pre><code>退出 按ctrl +d 
+</code></pre></li>
+</ol>
+<h2 id="Git标识"><a href="#Git标识" class="headerlink" title="Git标识"></a>Git标识</h2><pre><code>A: 你本地新增的文件（服务器上没有）.
+
+C: 文件的一个新拷贝.
+
+D: 你本地删除的文件（服务器上还在）.
+
+M: 文件的内容或者mode被修改了.
+
+R: 文件名被修改了。
+
+T: 文件的类型被修改了。
+
+U: 文件没有被合并(你需要完成合并才能进行提交)。
+
+X: 未知状态(很可能是遇到git的bug了，你可以向git提交bug report)。
+
+在man git diff-files中可以查到这些标志的说明。
+
+这些状态标志在git的源代码的diff.h文件中被定义。
+</code></pre><h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><ul>
+<li>$reset 相当于 windows cmd下的cls</li>
+<li>echo ‘Document’ &gt; README.md 表示在Document目录下创建文件</li>
+<li>echo ‘type some words’ &gt;&gt; README.md 表示向文件内输入内容</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/19/China/" rel="next" title="神州春色">
+                <i class="fa fa-chevron-left"></i> 神州春色
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/01/xUtils3/" rel="prev" title="xUtils3的基本使用">
+                xUtils3的基本使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/23/Progit-learn-note/"
+           data-title="Progit 学习笔记" data-url="https://mpqn.github.io/2016/12/23/Progit-learn-note/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="沒譜青年" />
+          <p class="site-author-name" itemprop="name">沒譜青年</p>
+          <p class="site-description motion-element" itemprop="description">洛陽親友如相問，就説我在寫BUG！</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在现有目录中初始化仓库"><span class="nav-number">1.</span> <span class="nav-text">在现有目录中初始化仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录每次更新到仓库"><span class="nav-number">2.</span> <span class="nav-text">记录每次更新到仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检查当前文件状态"><span class="nav-number">3.</span> <span class="nav-text">检查当前文件状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#跟踪新文件"><span class="nav-number">3.1.</span> <span class="nav-text">跟踪新文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#暂存已修改文件"><span class="nav-number">3.2.</span> <span class="nav-text">暂存已修改文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitignore-的格式规范如下："><span class="nav-number">4.</span> <span class="nav-text">.gitignore 的格式规范如下：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#看一个-gitignore-文件的例子："><span class="nav-number">4.1.</span> <span class="nav-text">看一个 .gitignore 文件的例子：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-Diff-的插件版本"><span class="nav-number">4.2.</span> <span class="nav-text">Git Diff 的插件版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移除文件"><span class="nav-number">4.3.</span> <span class="nav-text">移除文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动文件"><span class="nav-number">4.4.</span> <span class="nav-text">移动文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题"><span class="nav-number">5.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git标识"><span class="nav-number">6.</span> <span class="nav-text">Git标识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">7.</span> <span class="nav-text">Tips</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">沒譜青年</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"mpqn"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
